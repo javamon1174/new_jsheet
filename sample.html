@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsheet sample</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="assets/jsheet.css">
+    <script src="assets/jsheet.js" charset="utf-8"></script>
+</head>
+<body>
+<div id="cglist"></div>
+<script>
+    window.onload = function () {
+        $("body > nav > div.nav-top-body > list > item:nth-child(2)").addClass('active')
+
+        $(columns).each(function(index, el) {
+            switch (el) {
+                case "link":
+                case "member":
+                case "select":
+                case "media":
+                case "textarea":
+                    var type = {readOnly: true};
+                    break;
+                default:
+                    var type = {type: 'text'};
+            }
+            col_type.push(type);
+        });
+
+        $(original_data).each(function(index, row) {
+            var cell_list = [];
+            $(row["ROW_LIST"]).each(function(index, col) {
+                cell_list.push(col);
+            });
+            row_data.push(cell_list);
+        });
+
+        $('#cglist').jexcel({
+            data      : row_data,
+            colHeaders: colHeader,
+            colWidths : colWidths,
+            columns   : col_type
+        });
+
+        LayoutModule.setEvent();
+        window.mediaView.init();
+
+        loader.remove();
+    }
+
+    // $(window).on("load", function(){
+    //     $("#jsheet").jsheet({
+    //         dataMethod : false,
+    //         data       : data,
+    //         fixedCount : 5,
+    //     });
+    // });
+</script>
+
+</body>
+</html>
